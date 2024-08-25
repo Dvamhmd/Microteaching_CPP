@@ -8,6 +8,7 @@ bool terdeteksi_admin = false;
 bool lanjut_admin = false;
 bool lanjut_user = false;
 bool terdeteksi_user = false;
+bool bisa_daftar = true;
 
 string nama_kk[2][5] = {
 							{"Jaka","Wiwid","Zinan"},
@@ -34,7 +35,7 @@ string password;
 int rt;
 int total_warga[2] = {3,3};
 int total_pengajuan;
-int total_akun;
+int batas_akun, total_akun;
 char karakter;
 
 
@@ -328,21 +329,44 @@ int masuk(){
 	return terdeteksi_admin;
 }
 
-void daftar(){
-	system("cls");
-	total_akun = 1;
-	
-	header();cout<<endl;
-	cout<<"\t\t\tBuat ID Akun anda\t: ";cin>>id_user[total_akun];
-	cout<<"\t\t\tBuat Password anda\t: ";cin>>pw_user[total_akun];
-	cout<<endl;
-	garis2();cout<<endl;
-	cout<<"\t\t\tPendaftaran Berhasil";
-	cout<<endl<<endl;
-	cout<<"\t\t\t";
-	system("pause");cout<<endl<<endl;
-	system("cls");
+int daftar() {
+    system("cls");
+    total_akun = 1;
+    batas_akun = 10;
+
+
+    header(); cout << endl;
+    cout << "\t\t\tBuat ID Akun anda\t: ";cin >> nama_baru;
+
+    for (int i = 0; i < batas_akun; i++) {
+        if (nama_baru == id_user[i] || nama_baru == id_admin[i]) {
+            bisa_daftar = false;
+            cout << "\t\t\tID Akun dengan nama ini sudah ada, gunakan nama lain" << endl << endl;
+            cout << "\t\t\t";
+            system("pause");
+            system("cls");
+            break;
+        }
+    }
+
+    if (bisa_daftar) {
+        id_user[total_akun] = nama_baru;
+        cout<<"\t\t\tBuat Password anda\t: ";cin>>pw_user[total_akun];
+        total_akun++;
+
+        cout<<endl;
+        garis2();
+        cout<<endl;
+        cout<<"\t\t\tPendaftaran Berhasil" << endl << endl;
+        cout<<"\t\t\t";
+        system("pause");
+        cout<<endl<<endl;
+        system("cls");
+    }
+
+    return bisa_daftar ? 0 : 1; // Kembalikan 0 jika pendaftaran berhasil, 1 jika tidak
 }
+
 
 
 
